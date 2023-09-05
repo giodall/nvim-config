@@ -1,3 +1,1 @@
-vim.cmd[[colorscheme dracula]]
-
-vim.opt.termguicolors = true
+vim.cmd([[colorscheme dracula]])
