@@ -29,6 +29,7 @@ local plugins = {
 		build = ":TSUpdate",
 	},
 	"mbbill/undotree",
+	"sychen52/smart-term-esc.nvim",
 	-- completion
 	"hrsh7th/nvim-cmp",
 	"hrsh7th/cmp-nvim-lsp",
@@ -45,7 +46,7 @@ local plugins = {
 				"codelldb",
 				"rust-analyzer",
 				--python
-				"mypy",
+				-- "mypy",
 				"debugpy",
 				"ruff",
 				"pyright",
