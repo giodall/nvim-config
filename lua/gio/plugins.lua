@@ -17,6 +17,10 @@ local plugins = {
 		lazy = false,
 	},
 	{
+		"NvChad/nvim-colorizer.lua",
+		lazy = false,
+	},
+	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
@@ -36,33 +40,16 @@ local plugins = {
 	"L3MON4D3/LuaSnip",
 	"saadparwaiz1/cmp_luasnip",
 	"rafamadriz/friendly-snippets",
-	{
-		"williamboman/mason.nvim",
-		opts = {
-			ensure_installed = {
-				--lua
-				"stylua",
-				--rust
-				"codelldb",
-				"rust-analyzer",
-				--python
-				-- "mypy",
-				"debugpy",
-				"ruff",
-				"pyright",
-				"black",
-				--frontend
-			},
-		},
-	},
+	"williamboman/mason.nvim",
 	"neovim/nvim-lspconfig",
 	"williamboman/mason-lspconfig.nvim",
+	"WhoIsSethDaniel/mason-tool-installer.nvim",
 	"nvimdev/lspsaga.nvim",
 	{
-		"jose-elias-alvarez/null-ls.nvim",
-		ft = { "python", "lua" },
+		"mhartington/formatter.nvim",
+		event = "VeryLazy",
 		opts = function()
-			return require("gio.plugin_configs.null-ls")
+			return require("gio.plugin_configs.formatter")
 		end,
 	},
 	-- rust
@@ -90,7 +77,33 @@ local plugins = {
 	},
 	--debugger
 	"mfussenegger/nvim-dap",
-	"rcarriga/nvim-dap-ui",
+	-- {
+	-- 	"mfussenegger/nvim-dap",
+	-- 	config = function()
+	-- 		require("gio.plugin_configs.dap")
+	-- 	end,
+	-- },
+	-- "rcarriga/nvim-dap-ui",
+	{
+		"rcarriga/nvim-dap-ui",
+		-- event = "VeryLazy",
+		dependencies = "mfussenegger/nvim-dap",
+		-- 	config = function()
+		-- 		local dap = require("dap")
+		-- 		local dapui = require("dapui")
+		-- 		require("dapui").setup()
+		-- 		dap.listeners.after.event_initialized["dapui_config"] = function()
+		-- 			dapui.open()
+		-- 		end
+		-- 		dap.listeners.before.event_terminated["dapui_config"] = function()
+		-- 			dapui.close()
+		-- 		end
+		-- 		dap.listeners.before.event_exited["dapui_config"] = function()
+		-- 			dapui.close()
+		-- 		end
+		-- 	end,
+	},
+	"mxsdev/nvim-dap-vscode-js",
 	"lewis6991/gitsigns.nvim",
 	"tpope/vim-fugitive",
 	"tpope/vim-commentary",
