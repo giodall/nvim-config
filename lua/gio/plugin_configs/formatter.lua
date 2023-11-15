@@ -15,6 +15,9 @@ local M = {
 		typescript = {
 			require("formatter.filetypes.typescript").prettierd,
 		},
+		html = {
+			require("formatter.filetypes.html").prettierd,
+		},
 		svelte = {
 			require("formatter.filetypes.typescript").prettierd,
 		},

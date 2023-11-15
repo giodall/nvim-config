@@ -20,6 +20,7 @@ require("mason-tool-installer").setup({
 		"tailwindcss-language-server",
 		"eslint-lsp",
 		"prettierd",
+		"js-debug-adapter",
 	},
 })
 
@@ -93,3 +94,25 @@ for type, icon in pairs(signs) do
 	local hl = "DiagnosticSign" .. type
 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
+
+--hack to reset svelte lsp
+function On_attach(on_attach)
+	vim.api.nvim_create_autocmd("LspAttach", {
+		callback = function(args)
+			local buffer = args.buf
+			local client = vim.lsp.get_client_by_id(args.data.client_id)
+			on_attach(client, buffer)
+		end,
+	})
+end
+
+On_attach(function(client, bufnr)
+	vim.api.nvim_create_autocmd("BufWritePost", {
+		pattern = { "*.js", "*.ts" },
+		callback = function(ctx)
+			if client.name == "svelte" then
+				client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
+			end
+		end,
+	})
+end)
