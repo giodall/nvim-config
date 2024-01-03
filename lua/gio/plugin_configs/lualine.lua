@@ -6,8 +6,15 @@ require("lualine").setup({
 	sections = {
 		lualine_a = {
 			{
+				"buffers",
+			},
+		},
+		lualine_c = {
+			{
 				"filename",
-				path = 1,
+				symbols = {
+					modified = "●",
+				},
 			},
 		},
 	},
