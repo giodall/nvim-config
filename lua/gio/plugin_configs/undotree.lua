@@ -1,6 +1,6 @@
-vim.keymap.set("n", "<leader>u", function ()
-    vim.cmd.UndotreeToggle()
-    vim.cmd.UndotreeFocus()
+vim.keymap.set("n", "<leader>u", function()
+	vim.cmd.UndotreeToggle()
+	vim.cmd.UndotreeFocus()
 end)
 
 vim.opt.swapfile = false

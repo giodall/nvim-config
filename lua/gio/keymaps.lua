@@ -7,3 +7,20 @@ esc.setup({
 	key = "<Esc>",
 	except = { "nvim", "fzf" },
 })
+
+-- Buffer
+vim.keymap.set("n", "<leader><Left>", function()
+	print("Left")
+end)
+vim.keymap.set("n", "<leader><Right>", function()
+	print("Right")
+end)
+vim.keymap.set("n", "<leader><Up>", function()
+	print("Up")
+end)
+vim.keymap.set("n", "<leader><Down>", function()
+	print("Down")
+end)
+vim.keymap.set("n", "<leader><Left>", ":bprevious<CR>")
+vim.keymap.set("n", "<leader><Right>", ":bnext<CR>")
+vim.keymap.set("n", "<leader><Down>", ":bdelete<CR>")
