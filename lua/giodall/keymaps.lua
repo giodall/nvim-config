@@ -15,6 +15,9 @@ vim.keymap.set("n", "<leader><Down>", ":bdelete<CR>", { desc = "Delete buffer" }
 
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "[V]iew tree" })
 
+-- copy to clipboard with ctrl c
+vim.keymap.set("v", "<C-c>", '"*y')
+
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 --

@@ -135,6 +135,7 @@ return {
 			--  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
 			--  - settings (table): Override the default settings passed when initializing the server.
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+
 			local servers = {
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				--
@@ -142,7 +143,56 @@ return {
 				--    https://github.com/pmizio/typescript-tools.nvim
 				--
 				-- PYTHON
-				pyright = {},
+				pyright = {
+					-- root_dir = function(fname)
+					-- 	local rdir = util.root_pattern("pyproject.toml", "requirements.txt")(fname)
+					-- 		or util.path.dirname(fname)
+					-- 	return rdir
+					-- end,
+					on_attach = function()
+						require("lsp_signature").on_attach({
+							hint_enable = false,
+						})
+					end,
+					on_init = function(client)
+						local util = require("lspconfig/util")
+
+						local path = util.path
+
+						local function get_python_path(workspace)
+							-- Use activated virtualenv.
+							if vim.env.VIRTUAL_ENV then
+								return path.join(vim.env.VIRTUAL_ENV, "bin", "python")
+							end
+
+							-- Find and use virtualenv via poetry in workspace directory.
+							local match = vim.fn.glob(path.join(workspace, "poetry.lock"))
+							if match ~= "" then
+								local venv =
+									vim.fn.trim(vim.fn.system("poetry --directory " .. workspace .. " env info -p"))
+								return path.join(venv, "bin", "python")
+							end
+							-- Find and use virtualenv from pipenv in workspace directory.
+							match = vim.fn.glob(path.join(workspace, "Pipfile"))
+							if match ~= "" then
+								local venv = vim.fn.trim(vim.fn.system("PIPENV_PIPFILE=" .. match .. " pipenv --venv"))
+								return path.join(venv, "bin", "python")
+							end
+							-- Fallback to system Python.
+							return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
+						end
+						client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
+					end,
+					settings = {
+						python = {
+							analysis = {
+								-- autoSearchPaths = true,
+								diagnosticMode = "workspace",
+								-- useLibraryCodeForTypes = true,
+							},
+						},
+					},
+				},
 				--
 				-- TYPESCRIPT
 				-- But for many setups, the LSP (`tsserver`) will work just fine
@@ -208,7 +258,12 @@ return {
 						-- This handles overriding only values explicitly passed
 						-- by the server configuration above. Useful when disabling
 						-- certain features of an LSP (for example, turning off formatting for tsserver)
-						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+						server.capabilities = vim.tbl_deep_extend(
+							"force",
+							{},
+							capabilities,
+							server.capabilities or vim.lsp.protocol.make_client_capabilities()
+						)
 						require("lspconfig")[server_name].setup(server)
 					end,
 				},
@@ -225,6 +280,8 @@ return {
 			},
 			formatters_by_ft = {
 				lua = { "stylua" },
+				python = { "ruff_lsp" },
+				javascript = { "prettierd" },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--
