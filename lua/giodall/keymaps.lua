@@ -6,14 +6,14 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- Buffer
-vim.keymap.set("n", "<leader><Left>", ":bprevious<CR>")
-vim.keymap.set("n", "<leader><Right>", ":bnext<CR>")
-vim.keymap.set("n", "<leader><Down>", ":bdelete<CR>")
+vim.keymap.set("n", "<leader><Left>", ":bprevious<CR>", { desc = "Move focus to the left buffer" })
+vim.keymap.set("n", "<leader><Right>", ":bnext<CR>", { desc = "Move focus to the right buffer" })
+vim.keymap.set("n", "<leader><Down>", ":bdelete<CR>", { desc = "Delete buffer" })
 
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "[V]iew tree" })
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
