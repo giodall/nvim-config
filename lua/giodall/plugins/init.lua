@@ -34,6 +34,16 @@ return {
 			})
 		end,
 	},
+	{
+		"sychen52/smart-term-esc.nvim",
+		config = function()
+			local esc = require("smart-term-esc")
+			esc.setup({
+				key = "<Esc>",
+				except = { "nvim", "fzf" },
+			})
+		end,
+	},
 	{ -- Collection of various small independent plugins/modules
 		"echasnovski/mini.nvim",
 		config = function()
