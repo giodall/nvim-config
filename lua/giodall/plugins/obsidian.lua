@@ -30,7 +30,7 @@ return {
 				},
 				{
 					name = "perso",
-					path = "~/Documents/Obsidian Vault/perso",
+					path = "~/Documents/Obsidian Vault/notes-perso",
 				},
 			},
 		})

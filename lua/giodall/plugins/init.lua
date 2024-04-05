@@ -66,4 +66,10 @@ return {
 			--  Check out: https://github.com/echasnovski/mini.nvim
 		end,
 	},
+	{
+		"NvChad/nvim-colorizer.lua",
+		config = function()
+			require("colorizer").setup()
+		end,
+	},
 }
