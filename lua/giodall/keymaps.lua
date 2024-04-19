@@ -11,7 +11,24 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 -- Buffer
 vim.keymap.set("n", "<leader><Left>", ":bprevious<CR>", { desc = "Move focus to the left buffer" })
 vim.keymap.set("n", "<leader><Right>", ":bnext<CR>", { desc = "Move focus to the right buffer" })
-vim.keymap.set("n", "<leader><Down>", ":bdelete<CR>", { desc = "Delete buffer" })
+
+local function deleteBuffer()
+	local cmd = "bdelete"
+	-- local cmd = "b#<bar>bd#<CR>"
+
+	local buf = vim.api.nvim_command_output("ls %")
+	if string.find(buf, "R") then
+		-- cmd = "b#<bar>bd!#<CR>"
+		cmd = "bdelete!"
+	end
+
+	if math.floor(#vim.api.nvim_command_output("ls") / 46) > 1 then
+		vim.cmd("b#")
+		cmd = string.format("%s#", cmd)
+	end
+	vim.cmd(cmd)
+end
+vim.keymap.set("n", "<leader><Down>", deleteBuffer, { desc = "Delete buffer" })
 
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "[V]iew tree" })
 
