@@ -2,8 +2,12 @@ return {
 	"folke/trouble.nvim",
 	config = function()
 		require("trouble").setup({
-			severity = vim.diagnostic.severity.ERROR,
+			-- severity = vim.diagnostic.severity.ERROR,
 		})
+		vim.keymap.set("n", "<leader>tw", function()
+			require("trouble").filter({ severity = vim.diagnostic.severity.WARNING })
+			require("trouble").toggle()
+		end, { desc = "[T]oggle menu with [W]arning" })
 		vim.keymap.set("n", "<leader>tt", function()
 			require("trouble").toggle()
 		end, { desc = "[T]oggle menu" })
