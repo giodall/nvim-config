@@ -27,6 +27,7 @@ local function deleteBuffer()
 		cmd = string.format("%s#", cmd)
 	end
 	vim.cmd(cmd)
+	vim.cmd("bprevious")
 end
 vim.keymap.set("n", "<leader><Down>", deleteBuffer, { desc = "Delete buffer" })
 
