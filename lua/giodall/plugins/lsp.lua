@@ -32,6 +32,11 @@ return {
 			-- Useful status updates for LSP.
 			-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
 			{ "j-hui/fidget.nvim", opts = {} },
+			{
+				"ray-x/lsp_signature.nvim",
+				event = "VeryLazy",
+				opts = {},
+			},
 		},
 		config = function()
 			-- Brief Aside: **What is LSP?**
@@ -241,7 +246,26 @@ return {
 				--
 				-- TYPESCRIPT
 				-- But for many setups, the LSP (`tsserver`) will work just fine
-				tsserver = {},
+				vtsls = {
+					filetypes = { "typescript", "javascript" },
+					settings = {
+						typescript = { tsserver = { experimental = { enableProjectDiagnostics = true } } },
+						vtsls = {
+							-- autoUseWorkspaceTsdk = true,
+							tsserver = {
+								globalPlugins = {
+									{
+										name = "typescript-svelte-plugin",
+										location = "/opt/homebrew/lib/node_modules/typescript-svelte-plugin",
+										languages = { "svelte" },
+										configNamespace = "typescript",
+										enableForWorkspaceTypeScriptVersions = true,
+									},
+								},
+							},
+						},
+					},
+				},
 				svelte = {},
 				tailwindcss = {},
 				eslint = {},
