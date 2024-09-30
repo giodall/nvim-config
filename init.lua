@@ -1,1 +1,2 @@
-require("gio")
+require("giodall")
+-- require("kickstart")
