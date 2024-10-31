@@ -186,11 +186,29 @@ return {
 			--  - settings (table): Override the default settings passed when initializing the server.
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 
+			local util = require("lspconfig.util")
 			local servers = {
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				--
 				-- Some languages (like typescript) have entire language plugins that can be useful:
 				--    https://github.com/pmizio/typescript-tools.nvim
+				--
+				-- GO
+				gopls = {
+					cmd = { "gopls" },
+					filetypes = { "go", "gowork", "gomod", "gotmpl" },
+					root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+					settings = {
+
+						gopls = {
+							completeUnimported = true,
+							usePlaceholders = true,
+							analyses = {
+								unusedparams = true,
+							},
+						},
+					},
+				},
 				--
 				-- PYTHON
 				pyright = {
